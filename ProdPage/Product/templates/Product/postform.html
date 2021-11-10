@@ -1,0 +1,79 @@
+{% extends 'Product/index.html' %}
+{% block form %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'Product/postsave.css'%}">
+<div class="productform">
+  <form action="{% url 'prod:prodsave'  %}" method="POST">
+    {%csrf_token%}
+    <input type="text" class="form-control" value="{{username}}" id="name" aria-describedby="emailHelp" placeholder="Product name" name="username" readonly>
+    <div class="form-group">
+      <label for="name"> Name</label>
+      <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Product name" name="name"  required>
+    </div>
+    <div class="form-group">
+      <label for="weight"> Weight</label>
+      <input type="number" class="form-control" id="weight" aria-describedby="emailHelp" placeholder="10" name="weight" required>
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" class="form-control" id="price" aria-describedby="emailHelp" placeholder="100.0" name="price" required>
+    </div>
+    <button type="submit"  class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="postform">
+  <form action="{% url 'prod:postsave'  %}" method="POST">
+    {%csrf_token%}
+    <input type="hidden" class="form-control" value="{{username}}" id="name" aria-describedby="emailHelp" placeholder="Post name" name="username" readonly>
+    <div class="form-group">
+      <label for="name"> Create post</label>
+      <input type="text" class="form-control" id="name"  placeholder="text" name="post"  >
+    </div>
+    
+    <button type="submit"  class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+  {% for i in allpost %}
+  <form action="{% url 'prod:editpost'%}" method="post">
+    {%csrf_token%}
+    <input type="hidden" name="id" value="{{i.id}}">
+<div class="allposts">
+    <div class="cont" >
+      {% if i.pd.1 %}
+      {{i.pd.0}}
+      <button type="submit"> Edit</button>
+        
+      {% else %}
+      {{i.pd.0}}
+      {% endif %}
+    </div>
+    
+  </div>
+</form>
+    {% endfor %}
+    {% for i in prod %}
+    <form action="{% url 'prod:product'%}" method="post">
+      {%csrf_token%}
+      <input type="hidden" name="id" value="{{i.id}}">
+  <div class="allposts">
+      <div class="cont" >
+      {% if i.detail.2 %}
+        {{i.detail.0}}
+        {{i.detail.1}}
+        {{i.detail.3}}
+        {{i.detail.4}}
+      <button type="submit"> Edit</button>
+      {% else %}
+      {{i.detail.0}}
+      {{i.detail.1}}
+      {{i.detail.3}}
+      {{i.detail.4}}
+      {% endif %}
+      </div>
+      
+    </div>
+  </form>
+      {% endfor %}
+  
+{% endblock form %}

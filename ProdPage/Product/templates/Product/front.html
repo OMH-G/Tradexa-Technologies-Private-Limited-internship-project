@@ -1,0 +1,24 @@
+{% extends 'Product/index.html' %}
+
+{% block form %}
+<form action="{% url 'prod:postform' %}" method="POST">
+    {%csrf_token%}
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="pass">Password</label>
+      <input type="password" class="form-control" id="pass" placeholder="Password" name="pass">
+    </div>
+    <button type="submit"  class="btn btn-primary">Submit</button>
+  </form>
+  <div class="allproducts">
+    {% for i in prod %}
+      <div class="one">
+        i
+      </div>
+    {% endfor %}
+  </div>
+{% endblock form %}

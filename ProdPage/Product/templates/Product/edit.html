@@ -1,0 +1,16 @@
+{% extends 'Product/index.html' %}
+{% block form %}
+    
+<form action="{% url 'prod:editpost'  %}" method="POST">
+    {%csrf_token%}
+    <input type="text" class="form-control" value="{{username}}" id="name" aria-describedby="emailHelp" placeholder="Product name" name="username" readonly>
+    <input type="hidden" name="id" value="{{id}}">    
+    <div class="form-group">
+      <label for="name"> Post Edit</label>
+      <input type="text" class="form-control" id="name"  placeholder="Product name" name="text" value="{{post}}" required>
+    </div>
+    <button type="submit"  class="btn btn-primary">Submit</button>
+  </form>
+
+
+{% endblock form %}
