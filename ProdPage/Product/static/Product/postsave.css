@@ -4,3 +4,40 @@
     background-color: aquamarine;
     border: 2px solid black;
 }
+.one,.two{
+    display: flex;
+    justify-content: space-between;
+}
+.postform{
+    width:fit-content;
+}
+.productform{
+    width: 32vh;
+}
+.editproduct{
+    width: -webkit-fill-available;
+    display: flex;
+    flex-wrap: wrap;
+}
+.editform{
+    display: flex;
+    flex-wrap: wrap;
+    width:-webkit-fill-available;
+}
+.outerbox{
+    background-color: gainsboro;
+}
+.login{
+    background-color: antiquewhite;
+    width: 44vh;
+    padding: 10px;
+    border-radius: 4%;
+    margin-left: auto;margin-right: auto; margin-top: 10px;
+}
+.newuser{
+    background-color: antiquewhite;
+    width: 44vh;
+    padding: 10px;
+    border-radius: 4%;
+    margin-left: auto;margin-right: auto; margin-top: 10px;
+}

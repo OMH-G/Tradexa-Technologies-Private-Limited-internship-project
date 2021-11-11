@@ -1,0 +1,32 @@
+{% extends 'Product/index.html' %}
+
+{% block form %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'Product/postsave.css'%}">
+<div class="newuser">
+  <form action="{% url 'prod:newuser' %}" method="POST" >
+    {%csrf_token%}
+    <div class="form-group">
+      <label for="fname">First name</label>
+      <input type="text" class="form-control" id="email" aria-describedby="emailHelp"  name="fname">
+    </div>
+    <div class="form-group">
+      <label for="lname">Last name</label>
+      <input type="text" class="form-control" id="email" aria-describedby="emailHelp"  name="lname">
+    </div>
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" class="form-control" id="email" aria-describedby="emailHelp"  name="email">
+    </div>
+    <div class="form-group">
+      <label for="pass">Password</label>
+      <input type="password" class="form-control" id="pass" placeholder="Password" name="pass">
+    </div>
+    <div style="display: flex; justify-content:space-between;">
+    <button type="submit"  class="btn btn-primary">New</button>
+    <button type="submit"  class="btn btn-primary" style="margin-left: 60%;"><a href="{% url 'prod:login'%}" style="color:white;text-decoration: none;">Login</a></button>
+</div>
+</form>
+</div>
+
+{% endblock form %}

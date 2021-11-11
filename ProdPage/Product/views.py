@@ -1,6 +1,8 @@
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render,get_object_or_404
 from User.models import User,Post
 from .models import Product
+import datetime
 # Create your views here.
 def rawdata(usname,a=[]):
     templist=[]
@@ -25,7 +27,6 @@ def index(request):
     for i in Product.objects.all():
         posts=Post.objects.filter(text=f"Name:{i.name},Weight:{i.weight},price:{i.price}")
         user=[i.user.email for i in posts]
-        print(user)
         prodlist.append([i.name,i.weight,i.price]+user)
     return render(request,'Product/front.html',{'prod':prodlist})
 def ind(request):
@@ -39,7 +40,7 @@ def saveproduct(request):
     weight=request.POST.get('weight')
     price=request.POST.get('price')
     username=request.POST.get('username')
-    Product(name=f'{productname}-{username}',weight=weight,price=price).save()
+    Product(name=f'{productname}-{username}',weight=weight,price=price,created_at=datetime.datetime.now()).save()
     usname=get_object_or_404(User,email=username)
     templist,prodlist=rawdata(username,[weight,price])
     return render(request,'Product/postform.html',{'username':usname.email,'allpost':templist,'prod':prodlist})
@@ -55,6 +56,7 @@ def editproduct(request):
         product.name=f'{productname}-{user}'
         product.weight=weight
         product.price=price
+        product.updated_at=datetime.datetime.now()
         product.save()
         templist,prodlist=rawdata(user,[weight,price])
         return render(request,'Product/postform.html',{'username':user,'allpost':templist,'prod':prodlist})
@@ -63,10 +65,10 @@ def editpost(request):
     postid=request.POST.get('id')
     text=request.POST.get('text')
     user=Post.objects.get(id=postid).user.email
-    print(text)
     if(text):
         get_post=Post.objects.get(id=postid)
         get_post.text=text
+        get_post.updated_at=datetime.datetime.now()
         get_post.save()
         templist,prodlist=rawdata(user)
         return render(request,'Product/postform.html',{'username':user,'allpost':templist,'prod':prodlist})
@@ -75,9 +77,22 @@ def editpost(request):
 def savepost(request):
     text=request.POST.get('post')
     user=request.POST.get('username')
-    Post(user=User.objects.get(email=user),text=text).save() 
+    Post(user=User.objects.get(email=user),text=text,created_at=datetime.datetime.now()).save() 
     templist,prodlist=rawdata(user,[])
     return render(request,'Product/postform.html',{'username':user,'allpost':templist,'prod':prodlist})
+def newuser(request):
+    name=request.POST.get('email')
+    fname=request.POST.get('fname')
+    lname=request.POST.get('lname')
+    password=request.POST.get('pass')
+    if(name and fname and lname and password):
+        try: 
+            User.objects.get(email=name)
+            return HttpResponse('Already Added')
+        except:
+            User(email=name,first_name=fname,last_name=lname,password=password).save()
+        return render(request,'Product.html',{})
+    return render(request,'Product/newuser.html',{})
 
 
 
