@@ -23,6 +23,8 @@ installing all packages with custom command
 
 |name    | Description                |
 :------- | :------------------------- |
+|admin name | dell |
+|password | 123 |
 |newuser | starting page for new user |
 |postform | Displaying all information regarding product and post |
 |prodsave | saving the new product |
